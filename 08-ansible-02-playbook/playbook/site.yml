@@ -5,7 +5,7 @@
     - block:
       - name: Get Vector distrib
         ansible.builtin.get_url:
-          url: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
+          url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm"
           dest: "./vector-{{ vector_version }}.rpm"
     - name: install vector packages
       become: true
@@ -68,20 +68,20 @@
         name: nginx
         state: present
       notify: start-nginx
-    # - name: nginx | Create general config
-    #   become: true
-    #   template:
-    #     src: templates/nginx.conf.j2
-    #     dest: /etc/nginx/nginx.conf
-    #     mode: "0644"
-    #   notify: reload-nginx
+    - name: nginx | Create general config
+      become: true
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        mode: "0644"
+      notify: reload-nginx
 
 - name: Install Lighthouse
   hosts: lighthouse
   handlers:
     - name: reload-nginx
       become: true
-      command: nginx -s reload
+      command: sudo nginx -s reload
   pre_tasks:
     - name: Lighthouse | Install dependencies
       become: true
@@ -94,10 +94,10 @@
         repo: "{{ lighthouse_vcs }}"
         version: master
         dest: "{{ lighthouse_location_dir }}"
-    # - name: lighthouse | Create lighthouse config
-    #   become: true
-    #   template:
-    #     src: lighthouse.conf.j2
-    #     dest: /etc/nginx/conf.d/default.conf
-    #     mode: "0644"
-    #   notify: reload-nginx
+    - name: lighthouse | Create lighthouse config
+      become: true
+      template:
+        src: lighthouse.conf.j2
+        dest: /etc/nginx/conf.d/default.conf
+        mode: "0644"
+      notify: reload-nginx
