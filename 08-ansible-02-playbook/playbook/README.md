@@ -1,10 +1,10 @@
 ### PlayBook for Ansible 
-## Данный плейбук для ансибла устанавливает clickhouse и vector на redhat based os x86_64.
+## Данный плейбук для ансибла устанавливает clickhouse, lighthouse, nginx и vector на redhat based os x86_64.
 
 1. Определение переменных в дирректории group_vars
-* В vector.yml  указывается версия приложения Vector
-* В clickhouse.yml указывается необходимая версия и какие пакеты clickhouse будут установлены(клиент, сервер, common)
-* Файл vars.yml на данный момент пустой, служит для определения каких-либо новых переменных, которые бы не относились к вектору или кликхаусу.
+* В vector/vars.yml  указывается версия приложения Vector
+* В clickhouse/vars.yml указывается необходимая версия и какие пакеты clickhouse будут установлены(клиент, сервер, common)
+* В lighthouse/vars.yml указываем исходник лайтхауса, директорию для установки
 2. В prod.yml указываем хосты для установки
 3. В site.yml происходит вся магия:
 * Скачиваем пакет вектора нужной нам разрядности в указанную папку(dest:)
@@ -65,4 +65,18 @@ name: Install Clickhouse
       register: create_db
       failed_when: create_db.rc != 0 and create_db.rc !=82
       changed_when: create_db.rc == 0
+```
+* Переходим к установке nginx
+```
+nginx мы устанавливаем из репозитория по умолчанию с помощью команды ansible.builtin.yum:
+далее с помощью шаблона подкидываем ему дефолтный конфиг с измененным путем к страничке lighthouse.
+```
+
+* Переходим к установке lighthouse
+```
+Для начала ставим git
+      ansible.builtin.yum:
+        name: git
+далее клонируем гит ветку лайтхауса, перезапускаем nginx
+
 ```
