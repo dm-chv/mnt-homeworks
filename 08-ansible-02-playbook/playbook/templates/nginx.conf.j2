@@ -40,7 +40,7 @@ http {
         #access_log  logs/host.access.log  main;
 
         location / {
-            root   /home/pixel/lighthouse/;
+            root   {{ lighthouse_location_dir }};
             index  index.html index.htm;
         }
 
