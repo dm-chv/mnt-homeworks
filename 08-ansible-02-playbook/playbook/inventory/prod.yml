@@ -2,12 +2,12 @@
 clickhouse:
   hosts:
     clickhouse-01:
-      ansible_host: 51.250.73.252
+      ansible_host: 158.160.121.248
 vector:
   hosts:
     vector-01:
-      ansible_host: 51.250.65.79
+      ansible_host: 158.160.119.241
 lighthouse:
   hosts:
     lighthouse-01:
-      ansible_host: 158.160.63.118
+      ansible_host: 158.160.119.241
