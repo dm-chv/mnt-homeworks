@@ -1,0 +1,20 @@
+---
+- block:
+- name: install on Redhat based OS
+  ansible.builtin.include_tasks: rpm.yml
+  when: ansible_os_family == "Redhat"
+
+- name: install on debian based OS
+  ansible.builtin.include_tasks: deb.yml
+  when: ansible_os_family == "Debian"
+
+- name: Vector | Template config
+  become: true
+  ansible.builtin.template:
+    src: "templates/vector.config.j2"
+    dest: "{{ vector_config_dir }}/vector.yaml"
+- name: Vector | Register service
+  become: true
+  ansible.builtin.template:
+    src: "templates/vector.service.j2"
+    dest: "/etc/systemd/system/vector.service"

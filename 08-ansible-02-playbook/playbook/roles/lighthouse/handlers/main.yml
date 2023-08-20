@@ -1,0 +1,10 @@
+---
+- name: start-nginx
+  become: true
+  command: nginx
+- name: reload-nginx
+  become: true
+  command: nginx -s reload
+- name: reload-nginx
+  become: true
+  command: sudo nginx -s reload

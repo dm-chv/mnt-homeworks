@@ -1,0 +1,5 @@
+[Unit]
+Description=Vector service
+[Service]
+ExecStart=/usr/bin/vector --config-yaml {{ vector_config_dir }}/vector.yaml --watch-config
+Restart=always

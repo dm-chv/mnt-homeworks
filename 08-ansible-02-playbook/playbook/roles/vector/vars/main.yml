@@ -1,0 +1,4 @@
+---
+# vars file for vector-role
+vector_config:
+  data_dir: "{{ vector_config_dir }}"
